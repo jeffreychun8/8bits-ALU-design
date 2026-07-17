@@ -1,0 +1,42 @@
+module alu_16bit (
+    input  [15:0] A,          // 16-bit Input A
+    input  [15:0] B,          // 16-bit Input B
+    input  [2:0]  Opcode,     // 3-bit Opcode to select operation
+    output reg [15:0] Result, // 16-bit Result
+    output reg Zero,          // Zero Flag
+    output reg Carry,         // Carry Flag
+    output reg Negative       // Negative Flag
+);
+
+    // Internal wire to hold the 17th bit for carry detection
+    reg [16:0] temp_result;
+
+    always @(*) begin
+        // Default values
+        Carry = 0;
+        
+        case (Opcode)
+            3'b000: begin // ADD
+                temp_result = A + B;
+                Result = temp_result[15:0];
+                Carry = temp_result[16];
+            end
+            
+            3'b001: begin // SUB
+                Result = A - B;
+                Carry = (A < B); // Carry acts as borrow in subtraction
+            end
+            
+            3'b010: Result = A & B; // AND
+            3'b011: Result = A | B; // OR
+            3'b100: Result = A ^ B; // XOR
+            3'b101: Result = ~A;    // NOT A
+            
+            default: Result = 16'b0;
+        endcase
+
+        // Update Status Flags
+        Zero     = (Result == 16'b0);
+        Negative = Result[15];
+    end
+endmodule

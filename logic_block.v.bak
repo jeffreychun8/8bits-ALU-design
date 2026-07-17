@@ -1,0 +1,16 @@
+module logic_block (
+input A,
+input B,
+input op3,
+input op0,
+output [7:0] logic_out
+);
+
+assign logic_out = (op3 == 0 && op0 == 00)? (A & B):
+						 (op3 == 0 && op0 == 1)? (A | B):
+						 (op3 == 1 && op0 == 0)? (A ^ B):
+						 (op3 == 1 && op0 == 1)? (~A);
+						 
+
+endmodule
+
