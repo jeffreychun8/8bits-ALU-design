@@ -1,4 +1,3 @@
-# 8bits-ALU-design
 # 8-Bit Modular ALU — Intel Quartus Prime (DE10-Lite / MAX 10)
 
 An 8-bit Arithmetic Logic Unit implemented in Verilog HDL and deployed on the
